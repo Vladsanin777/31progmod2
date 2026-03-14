@@ -1,0 +1,15 @@
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/lab10.GeneratedMSBuildEditorConfig.editorconfig
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/lab10.AssemblyInfoInputs.cache
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/lab10.AssemblyInfo.cs
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/lab10.csproj.CoreCompileInputs.cache
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/lab10.sourcelink.json
+/home/vlad/31progmod2/lab10/bin/Debug/net10.0/lab10
+/home/vlad/31progmod2/lab10/bin/Debug/net10.0/lab10.deps.json
+/home/vlad/31progmod2/lab10/bin/Debug/net10.0/lab10.runtimeconfig.json
+/home/vlad/31progmod2/lab10/bin/Debug/net10.0/lab10.dll
+/home/vlad/31progmod2/lab10/bin/Debug/net10.0/lab10.pdb
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/lab10.dll
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/refint/lab10.dll
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/lab10.pdb
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/lab10.genruntimeconfig.cache
+/home/vlad/31progmod2/lab10/obj/Debug/net10.0/ref/lab10.dll
