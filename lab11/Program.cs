@@ -2,6 +2,11 @@
 using System.IO;
 using System.Text;
 
+using Avalonia;
+using System;
+
+namespace LabApp;
+
 interface HumanInterface
 {
     public string getFirstName();
@@ -136,5 +141,18 @@ class Student : HumanBase
     {
         return $"{getCourse()} {getStudyBuilding()} {getGroup()}";
     }
-    static void Main() { }
+}
+
+class Program
+{
+    // Точка входа в приложение
+    [STAThread]
+    public static void Main(string[] args) => BuildAvaloniaApp()
+        .StartWithClassicDesktopLifetime(args);
+
+    // Настройка конфигурации (движок, шрифты и т.д.)
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect() // Автоматически выберет Windows или Linux
+            .LogToTrace();
 }
