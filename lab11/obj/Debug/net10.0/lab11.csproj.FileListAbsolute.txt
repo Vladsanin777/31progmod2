@@ -13,3 +13,6 @@
 /home/vlad/31progmod2/lab11/obj/Debug/net10.0/lab11.pdb
 /home/vlad/31progmod2/lab11/obj/Debug/net10.0/lab11.genruntimeconfig.cache
 /home/vlad/31progmod2/lab11/obj/Debug/net10.0/ref/lab11.dll
+/home/vlad/31progmod2/lab11/obj/Debug/net10.0/lab11.csproj.AssemblyReference.cache
+/home/vlad/31progmod2/lab11/obj/Debug/net10.0/Avalonia/Resources.Inputs.cache
+/home/vlad/31progmod2/lab11/obj/Debug/net10.0/Avalonia/resources

@@ -53,12 +53,12 @@ abstract class HumanBase : HumanInterface
     {
         m_surname = surname;
     }
-    public void serialize(BinaryWriter writer) {
+    public virtual void serialize(BinaryWriter writer) {
         writer.Write(getFirstName());
         writer.Write(getSecondName());
         writer.Write(getSurname());
     }
-    public void deserialize(BinaryReader reader) {
+    public virtual void deserialize(BinaryReader reader) {
         setFirstName(reader.ReadString());
         setSecondName(reader.ReadString());
         setSurname(reader.ReadString());
@@ -69,7 +69,9 @@ class Student : HumanBase
     private byte m_course;
     private string m_studyBuilding;
     private string m_group;
-    public Student(byte course, string studyBuilding, string _group, string firstName, string secondName, string surname) :
+    public Student(byte course, string studyBuilding, 
+            string _group, string firstName, 
+            string secondName, string surname) :
         base(firstName, secondName, surname)
     {
         m_course = course;
@@ -101,44 +103,45 @@ class Student : HumanBase
     {
         m_group = group;
     }
-    public void serialize(BinaryWriter writer) {
+    public override void serialize(BinaryWriter writer) {
         base.serialize(writer);
         writer.Write(getCourse());
         writer.Write(getStudyBuilding());
         writer.Write(getGroup());
     }
-    public void serialize(Stream stream) {
+    public override void serialize(Stream stream) {
         using (BinaryWriter writer = new BinaryWriter(stream, Encoding.UTF8, false))
         {
             serialize(writer);
         }
     }
-    public void serialize(string fileName) {
+    public override void serialize(string fileName) {
         using (Stream stream = File.Open(fileName, FileMode.Create))
         {
             serialize(stream);
         }
     }
-    public void deserialize(BinaryReader reader) {
+    public override void deserialize(BinaryReader reader) {
         base.deserialize(reader);
         setCourse(reader.ReadByte());
         setStudyBuilding(reader.ReadString());
         setGroup(reader.ReadString());
     }
-    public void deserialize(Stream stream) {
+    public override void deserialize(Stream stream) {
         using (BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, false))
         {
             deserialize(reader);
         }
     }
-    public void deserialize(string fileName) {
+    public override void deserialize(string fileName) {
         using (Stream stream = File.Open(fileName, FileMode.Create))
         {
             deserialize(stream);
         }
     }
-    public string toString()
+    public override string toString()
     {
+        base.toString();
         return $"{getCourse()} {getStudyBuilding()} {getGroup()}";
     }
 }
