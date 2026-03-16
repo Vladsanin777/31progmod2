@@ -2,6 +2,10 @@ using System;
 using System.IO;
 using System.Windows;
 using Microsoft.Win32;
+using System;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Text.RegularExpressions;
 
 namespace UI
 {
@@ -12,33 +16,33 @@ namespace UI
             InitializeComponent();
         }
 
-        private void BrowseSaveBtn_Click(object sender, RoutedEventArgs e)
+        private void BrowseSerializeBtn_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Title = "Сохранить файл";
-            saveFileDialog.Filter = "Binary files (*.dat)|*.dat|All files (*.*)|*.*";
+            SaveFileDialog serializeFileDialog = new SaveFileDialog();
+            serializeFileDialog.Title = "Serialize file";
+            serializeFileDialog.Filter = "Binary files (*.dat)|*.dat|All files (*.*)|*.*";
 
-            if (saveFileDialog.ShowDialog() == true)
+            if (serializeFileDialog.ShowDialog() == true)
             {
-                SavePathBox.Text = saveFileDialog.FileName;
+                SerializePathBox.Text = serializeFileDialog.FileName;
             }
         }
 
-        private void BrowseOpenBtn_Click(object sender, RoutedEventArgs e)
+        private void BrowseDeserializeBtn_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "Открыть файл";
-            openFileDialog.Filter = "Binary files (*.dat)|*.dat|All files (*.*)|*.*";
+            OpenFileDialog deserializeFileDialog = new OpenFileDialog();
+            deserializeFileDialog.Title = "Deserialize file";
+            deserializeFileDialog.Filter = "Binary files (*.dat)|*.dat|All files (*.*)|*.*";
 
-            if (openFileDialog.ShowDialog() == true)
+            if (deserializeFileDialog.ShowDialog() == true)
             {
-                OpenPathBox.Text = openFileDialog.FileName;
+                DeserializePathBox.Text = deserializeFileDialog.FileName;
             }
         }
 
         private void SerializeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SavePathBox.Text is string path && !string.IsNullOrWhiteSpace(path))
+            if (SerializePathBox.Text is string path && !string.IsNullOrWhiteSpace(path))
             {
                 MessageBox.Show("Объект успешно сериализован!", "Успех");
             }
@@ -46,11 +50,36 @@ namespace UI
 
         private void DeserializeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (OpenPathBox.Text is string path && File.Exists(path))
+            if (DeserializePathBox.Text is string path && File.Exists(path))
             {
                 MessageBox.Show("Объект успешно десериализован!", "Успех");
             }
         }
+
+        private void NumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // 1. Разрешаем только цифры
+            if (!char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // 2. Безопасно получаем TextBox и проверяем его на null
+            if (sender is TextBox textBox)
+            {
+                // Используем оператор ?? "", чтобы гарантировать отсутствие null в тексте
+                string currentText = textBox.Text ?? "";
+                string fullText = currentText.Insert(textBox.SelectionStart, e.Text);
+
+                if (int.TryParse(fullText, out int value))
+                {
+                    if (value > 255)
+                    {
+                        e.Handled = true; 
+                    }
+                }
+            }
+        }
     }
 }
-
