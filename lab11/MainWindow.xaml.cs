@@ -7,6 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 
+using Human;
+using Student;
+
 namespace UI
 {
     public partial class MainWindow : Window
@@ -44,31 +47,82 @@ namespace UI
         {
             if (SerializePathBox.Text is string path && !string.IsNullOrWhiteSpace(path))
             {
-                MessageBox.Show("Объект успешно сериализован!", "Успех");
+                switch (SerializeTab.SelectedIndex) {
+                    case 0:
+                        {
+                            if (FirstNameHuman.Text is string firstName &&
+                                    SecondNameHuman.Text is string secondName &&
+                                    SurnameHuman.Text is string surname) {
+                                HumanBase human = new HumanBase(firstName,
+                                        secondName, surname);
+                                
+                                human.serialize(path);
+                            }
+                        }
+                        break;
+                    case 1:
+                        {
+                            if (FirstNameStudent.Text is string firstName &&
+                                    SecondNameStudent.Text is string secondName &&
+                                    SurnameStudent.Text is string surname &&
+                                    CourseStudent.Text is string course &&
+                                    StudyBuildingStudent.Text is string studyBuilding &&
+                                    GroupStudent.Text is string _group) {
+                                if (byte.TryParse(course, out byte _course)) {
+                                    StudentBase student = new StudentBase(firstName, secondName, surname,
+                                            _course, studyBuilding, _group);
+
+                                    student.serialize(path);
+                                }
+                            }
+                        }
+                        break;
+                }
             }
         }
 
         private void DeserializeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DeserializePathBox.Text is string path && File.Exists(path))
+            if (DeserializePathBox.Text is string path && !string.IsNullOrWhiteSpace(path))
             {
-                MessageBox.Show("Объект успешно десериализован!", "Успех");
+                switch (SerializeTab.SelectedIndex) {
+                    case 0:
+                        {
+                            HumanBase human = new HumanBase();
+                            human.deserialize(path);
+
+                            FirstNameHuman.Text = human.getFirstName();
+                            SecondNameHuman.Text = human.getSecondName();
+                            SurnameHuman.Text = human.getSurname();
+                        }
+                        break;
+                    case 1:
+                        {
+                            StudentBase student = new StudentBase();
+                            student.deserialize(path);
+
+                            FirstNameStudent.Text = student.getFirstName();
+                            SecondNameStudent.Text = student.getSecondName();
+                            SurnameStudent.Text = student.getSurname();
+                            CourseStudent.Text = student.getCourse().ToString();
+                            StudyBuildingStudent.Text = student.getStudyBuilding();
+                            GroupStudent.Text = student.getGroup();
+                        }
+                        break;
+                    }
             }
         }
 
         private void NumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // 1. Разрешаем только цифры
             if (!char.IsDigit(e.Text, 0))
             {
                 e.Handled = true;
                 return;
             }
 
-            // 2. Безопасно получаем TextBox и проверяем его на null
             if (sender is TextBox textBox)
             {
-                // Используем оператор ?? "", чтобы гарантировать отсутствие null в тексте
                 string currentText = textBox.Text ?? "";
                 string fullText = currentText.Insert(textBox.SelectionStart, e.Text);
 

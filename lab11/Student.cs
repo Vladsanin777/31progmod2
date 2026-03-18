@@ -5,21 +5,28 @@ using Human;
 
 namespace Student;
 
-class Student : HumanBase
+class StudentBase : HumanBase
 {
     private byte m_course;
     private string m_studyBuilding;
     private string m_group;
-    public Student(byte course, string studyBuilding, 
-            string _group, string firstName, 
-            string secondName, string surname) :
+
+    public StudentBase() : base() {
+        m_course = 0;
+        m_studyBuilding = "";
+        m_group = "";
+    }
+    public StudentBase(string firstName, 
+            string secondName, string surname,
+            byte course, string studyBuilding, 
+            string _group) :
         base(firstName, secondName, surname)
     {
         m_course = course;
         m_studyBuilding = studyBuilding;
         m_group = _group;
     }
-    ~Student() { }
+    ~StudentBase() { }
     public byte getCourse()
     {
         return m_course;

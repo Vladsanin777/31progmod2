@@ -13,11 +13,17 @@ interface HumanInterface
     public void setSecondName(string secondName);
 }
 
-abstract class HumanBase : HumanInterface
+class HumanBase : HumanInterface
 {
     private string m_firstName;
     private string m_secondName;
     private string m_surname;
+
+    public HumanBase() {
+        m_firstName = "";
+        m_secondName = "";
+        m_surname = "";
+    }
 
     public HumanBase(string firstName, string secondName, string surname)
     {
