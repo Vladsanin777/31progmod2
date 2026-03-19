@@ -85,7 +85,7 @@ class HumanBase : HumanInterface
         }
     }
     public virtual void deserialize(string fileName) {
-        using (Stream stream = File.Open(fileName, FileMode.Create))
+        using (Stream stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
         {
             deserialize(stream);
         }

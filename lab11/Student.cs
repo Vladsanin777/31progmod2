@@ -82,7 +82,7 @@ class StudentBase : HumanBase
         }
     }
     public override void deserialize(string fileName) {
-        using (Stream stream = File.Open(fileName, FileMode.Create))
+        using (Stream stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
         {
             deserialize(stream);
         }
