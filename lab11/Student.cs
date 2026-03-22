@@ -87,7 +87,7 @@ class StudentBase : HumanBase
             deserialize(stream);
         }
     }
-    public override string toString()
+    public override string ToString()
     {
         base.toString();
         return $"{getCourse()} {getStudyBuilding()} {getGroup()}";

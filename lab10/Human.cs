@@ -32,6 +32,21 @@ class HumanBase : HumanInterface
         m_surname = surname;
     }
     ~HumanBase() { }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(m_firstName, m_secondName, m_surname);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not HumanBase other) return false;
+
+        return getFirstName() == other.getFirstName() && 
+               getSecondName() == other.getSecondName() && 
+               getSurname() == other.getSurname();
+    }
+
     public string getFirstName()
     {
         return m_firstName;
@@ -56,41 +71,7 @@ class HumanBase : HumanInterface
     {
         m_surname = surname;
     }
-    public virtual void serialize(BinaryWriter writer) {
-        writer.Write(getFirstName());
-        writer.Write(getSecondName());
-        writer.Write(getSurname());
-    }
-    public virtual void serialize(Stream stream) {
-        using (BinaryWriter writer = new BinaryWriter(stream, Encoding.UTF8, false))
-        {
-            serialize(writer);
-        }
-    }
-    public virtual void serialize(string fileName) {
-        using (Stream stream = File.Open(fileName, FileMode.Create))
-        {
-            serialize(stream);
-        }
-    }
-    public virtual void deserialize(BinaryReader reader) {
-        setFirstName(reader.ReadString());
-        setSecondName(reader.ReadString());
-        setSurname(reader.ReadString());
-    }
-    public virtual void deserialize(Stream stream) {
-        using (BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, false))
-        {
-            deserialize(reader);
-        }
-    }
-    public virtual void deserialize(string fileName) {
-        using (Stream stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
-        {
-            deserialize(stream);
-        }
-    }
-    public virtual string ToString()
+    public override string ToString()
     {
         return $"{getFirstName()} {getSecondName()} {getSurname()}";
     }
