@@ -5,8 +5,7 @@ using Human;
 
 namespace Student;
 
-struct StudentBase<TContainer> : HumanBase<TContainer>
-    where TContainer : unmanaged
+class StudentBase : HumanBase
 {
     private byte m_course;
     private string m_studyBuilding;
@@ -17,17 +16,34 @@ struct StudentBase<TContainer> : HumanBase<TContainer>
         m_studyBuilding = "";
         m_group = "";
     }
+
     public StudentBase(string firstName, 
             string secondName, string surname,
             byte course, string studyBuilding, 
-            string _group) :
+            string group) :
         base(firstName, secondName, surname)
     {
         m_course = course;
         m_studyBuilding = studyBuilding;
-        m_group = _group;
+        m_group = group;
     }
+
     ~StudentBase() { }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(m_course, m_studyBuilding, m_group);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not StudentBase other) return false;
+
+        return base.Equals(other) && getCourse() == other.getCourse() && 
+               getStudyBuilding() == other.getStudyBuilding() && 
+               getGroup() == other.getGroup();
+    }
+
     public byte getCourse()
     {
         return m_course;
@@ -52,9 +68,8 @@ struct StudentBase<TContainer> : HumanBase<TContainer>
     {
         m_group = group;
     }
-    public override string toString()
+    public override string ToString()
     {
-        base.toString();
-        return $"{getCourse()} {getStudyBuilding()} {getGroup()}";
+        return $"{base.ToString()} {getCourse()} {getStudyBuilding()} {getGroup()}";
     }
 }

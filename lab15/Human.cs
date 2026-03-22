@@ -13,12 +13,11 @@ interface HumanInterface
     public void setSecondName(string secondName);
 }
 
-struct HumanBase : HumanInterface
+class HumanBase : HumanInterface
 {
     private string m_firstName;
     private string m_secondName;
     private string m_surname;
-    private Node<HumanBase> m_node;
 
     public HumanBase() {
         m_firstName = "";
@@ -34,20 +33,18 @@ struct HumanBase : HumanInterface
     }
     ~HumanBase() { }
 
-    public void setNext(ref Node node) {
-        m_node.setNext(node);
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(m_firstName, m_secondName, m_surname);
     }
 
-    public void setPrev(ref Human<TContainer> human) {
-        m_node.setPrev(human);
-    }
+    public override bool Equals(object? obj)
+    {
+        if (obj is not HumanBase other) return false;
 
-    public ref Human<TContainer> getNext() {
-        return ref m_node.getNext();
-    }
-
-    public ref Human<TContainer> getPrev() {
-        return ref m_node.getPrev();
+        return getFirstName() == other.getFirstName() && 
+               getSecondName() == other.getSecondName() && 
+               getSurname() == other.getSurname();
     }
 
     public string getFirstName()
@@ -74,7 +71,7 @@ struct HumanBase : HumanInterface
     {
         m_surname = surname;
     }
-    public virtual string toString()
+    public override string ToString()
     {
         return $"{getFirstName()} {getSecondName()} {getSurname()}";
     }
